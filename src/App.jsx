@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import bg from './assets/bg.png';
-import btnStart from './assets/start btn.png';
+import originalWelcome from './assets/start btn.png';
+import newWelcome from './assets/Vector.png';
 import num1 from './assets/number/Number=11.png';
 import num2 from './assets/number/Number=12.png';
 import num3 from './assets/number/Number=13.png';
@@ -33,35 +34,45 @@ function App() {
     }
   }, [count]);
 
+  const [welcomeImg, setWelcomeImg] = useState(originalWelcome);
+
   return (
     <div>
       {/* Background */}
       <img
-        className="bg-cover bg-center h-screen w-full absolute z-0"
+        className="bg-cover bg-center h-screen w-full absolute z-0 "
         src={bg}
         alt="Background"
       />
 
       {/* Tombol Start */}
       {count === null && (
-        <div className="relative mx-auto w-fit -top-5">
+        <div className="relative mx-auto w-fit ">
           <img
-            className="cursor-pointer"
-            src={btnStart}
+            className="cursor-pointer h-30"
+            src={originalWelcome}
             alt="Start Button"
-            onClick={() => setCount(10)} // mulai countdown dari 10
+
+            onClick={() => {
+              setCount(10);
+              setWelcomeImg(newWelcome);
+            }} // mulai countdown dari 10
           />
         </div>
       )}
 
       {/* Countdown */}
       {count !== null && (
-        <div className="relative flex justify-center items-center h-screen">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col  ">
+          <div className="items-center justify-center flex flex-col ">
+          <img src={newWelcome} alt="" className="relative  cursor-pointer h-20 w-115"/> 
+
           <img
-            src={numbers[count - 1]} // -1 karena array dimulai index 0
+            src={numbers[count - 1]} // -1 karena array dimulai index 0x`
             alt={`Number ${count}`}
-            className="w-40 h-40 object-contain"
+            className="h-10 w-auto absolute top-15"
           />
+          </div>
         </div>
       )}
     </div>
