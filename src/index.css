@@ -1,6 +1,41 @@
 @import "tailwindcss";
+<<<<<<< HEAD
+
+:root {
+    --font-sans: 'Poppins', sans-serif;
+}
+
+@theme {
+    --color-primary: #6523B6;
+    --color-secondary: #FB7823;
+    --color-accent1: #C3B4FA;
+    --color-accent2: #FADAA2;
+    --color-card1: #4A1885;
+    --color-card2: #AF4417;
+    --color-border: #220A3D;
+    --color-borderchoose: #FFB22E;
+}
+
+body {
+    background-image: url('assets/bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.text-stroke-white {
+  -webkit-text-stroke: 3px white;
+  text-stroke: 3px white;
+}
+.text-stroke-black {
+  -webkit-text-stroke: 4px black;
+  text-stroke: 4px black;
+}
+=======
 @font-face {
     font-family: oxo;
     src: url(../public/Exo-Italic-VariableFont_wght.ttf);
 }
 .oxo{font-family: oxo;}
+>>>>>>> 9eb5f31709c0e37ccbd4e84448c95db00b6ea688
