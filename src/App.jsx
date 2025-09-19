@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { pokemonData } from './pokemonData';
 import { PlayerSlot, BanButton, PokemonCard } from './kiri orang.jsx';
 // pokemonCard bisa di hapus aja
@@ -160,6 +161,35 @@ export default function App() {
           </div>
         </div>
       </main>
+=======
+import bg from './assets/bg.png';
+import Top from './top.jsx';
+import Card from './card.jsx';
+
+
+
+function App() {
+
+
+  return (
+    <div>
+      {/* Background */}
+      <img
+        className="bg-cover bg-center h-screen w-full absolute z-0 "
+        src={bg}
+        alt="Background"
+      />
+
+      <div className="">
+        <Top />
+        </div>
+
+      <div className="">
+        <Card />
+        </div>
+        
+>>>>>>> 9eb5f31709c0e37ccbd4e84448c95db00b6ea688
     </div>
+    
   );
 }

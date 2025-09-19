@@ -1,4 +1,5 @@
 @import "tailwindcss";
+<<<<<<< HEAD
 
 :root {
     --font-sans: 'Poppins', sans-serif;
@@ -31,3 +32,10 @@ body {
   -webkit-text-stroke: 4px black;
   text-stroke: 4px black;
 }
+=======
+@font-face {
+    font-family: oxo;
+    src: url(../public/Exo-Italic-VariableFont_wght.ttf);
+}
+.oxo{font-family: oxo;}
+>>>>>>> 9eb5f31709c0e37ccbd4e84448c95db00b6ea688
