@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import bg from './assets/bg.png';
 import Top from './top.jsx';
+import Card from './card.jsx';
 
 
 
@@ -16,8 +17,14 @@ function App() {
         alt="Background"
       />
 
-      
+      <div className="">
         <Top />
+        </div>
+
+      <div className="">
+        <Card />
+        </div>
+        
     </div>
     
   );
