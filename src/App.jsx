@@ -1,71 +1,165 @@
 import { useState, useEffect } from "react";
-import bg from './assets/bg.png';
-import btnStart from './assets/start btn.png';
-import num1 from './assets/number/Number=11.png';
-import num2 from './assets/number/Number=12.png';
-import num3 from './assets/number/Number=13.png';
-import num4 from './assets/number/Number=14.png';
-import num5 from './assets/number/Number=15.png';
-import num6 from './assets/number/Number=16.png';
-import num7 from './assets/number/Number=17.png';
-import num8 from './assets/number/Number=18.png';
-import num9 from './assets/number/Number=19.png';
-import num10 from './assets/number/Number=20.png';
+import { pokemonData } from './pokemonData';
+import { PlayerSlot, BanButton, PokemonCard } from './kiri orang.jsx';
+// pokemonCard bisa di hapus aja
 
-function App() {
-  // state countdown
-  const [count, setCount] = useState(null); // null = belum mulai
+export default function App() {
+  const DRAFT_TIME = 20;
+  const [timer, setTimer] = useState(DRAFT_TIME);
+  const [isDrafting, setIsDrafting] = useState(false);
+  const [pickedPokemon, setPickedPokemon] = useState([]);
+  const [bannedPokemon, setBannedPokemon] = useState([null, null]); // [leftBanId, rightBanId]
+  const [slotPokemon, setSlotPokemon] = useState(Array(10).fill(null));
+  const [activeSlot, setActiveSlot] = useState(null);
+  const [banTarget, setBanTarget] = useState(null);
 
-  // array gambar angka
-  const numbers = [
-    num1, num2, num3, num4, num5,
-    num6, num7, num8, num9, num10
-  ];
-
-  // efek hitung mundur
   useEffect(() => {
-    if (count !== null && count > 1) {
-      const timer = setInterval(() => {
-        setCount((prev) => prev - 1);
-      }, 1000);
+    if (!isDrafting || timer === 0) return;
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isDrafting, timer]);
 
-      return () => clearInterval(timer);
+  const handleStartDraft = () => {
+    setIsDrafting(true);
+    setTimer(DRAFT_TIME);
+    setPickedPokemon([]);
+    setBannedPokemon([null, null]);
+    setSlotPokemon(Array(10).fill(null));
+  };
+
+  const handlePickPokemon = (pokemonId) => {
+    // Jika Pokemon sudah dibanned → tidak bisa dipilih
+    // if (bannedPokemon.includes(pokemonId)) return;
+
+    // Mode Ban
+    if (banTarget) {
+      const newBans = [...bannedPokemon];
+      if (banTarget === "left") newBans[0] = pokemonId;
+      if (banTarget === "right") newBans[1] = pokemonId;
+      setBannedPokemon(newBans);
+      setBanTarget(null);
+      return;
     }
-  }, [count]);
+
+    // Mode Normal → assign ke slot
+    if (pickedPokemon.includes(pokemonId) || activeSlot === null) return;
+    const selectedPokemon = pokemonData.find((p) => p.id === pokemonId);
+    const newSlots = [...slotPokemon];
+    newSlots[activeSlot] = selectedPokemon;
+    setSlotPokemon(newSlots);
+    setPickedPokemon([...pickedPokemon, pokemonId]);
+    setActiveSlot(null);
+  };
 
   return (
-    <div>
-      {/* Background */}
-      <img
-        className="bg-cover bg-center h-screen w-full absolute z-0"
-        src={bg}
-        alt="Background"
-      />
-
-      {/* Tombol Start */}
-      {count === null && (
-        <div className="relative mx-auto w-fit -top-5">
-          <img
-            className="cursor-pointer"
-            src={btnStart}
-            alt="Start Button"
-            onClick={() => setCount(10)} // mulai countdown dari 10
-          />
+    <div className="relative min-h-screen flex flex-col items-center justify-center font-sans overflow-hidden">
+      {/* Header */}
+      <header className="absolute w-[400px] h-[70px] top-0 text-center z-10 bg-white/90 rounded-b-4xl">
+        <div className="h-2 flex flex-row items-left justify-center">
+          {isDrafting ? (
+            <div className="w-full h-full bg-primary"></div>
+          ) : (
+            <>
+              <div className="w-1/2 h-full bg-primary"></div>
+              <div className="w-1/2 h-full bg-secondary"></div>
+            </>
+          )}
         </div>
-      )}
-
-      {/* Countdown */}
-      {count !== null && (
-        <div className="relative flex justify-center items-center h-screen">
-          <img
-            src={numbers[count - 1]} // -1 karena array dimulai index 0
-            alt={`Number ${count}`}
-            className="w-40 h-40 object-contain"
-          />
+        {isDrafting ? (
+          <h1 className="text-xl text-primary">Purple Team Choosing</h1>
+        ) : (
+          <h1 className="text-xl text-primary">Welcome to Draft Simulator!</h1>
+        )}
+        <div className="rounded-lg px-6 py-1">
+          {isDrafting ? (
+            <span className="text-6xl font-black text-secondary text-stroke-white">
+              {timer}
+            </span>
+          ) : (
+            <span>
+              <button
+                className="bg-secondary text-white font-bold rounded-full px-10 py-3"
+                onClick={handleStartDraft}
+              >
+                Start Draft
+              </button>
+            </span>
+          )}
         </div>
-      )}
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-grow flex flex-col mt-30 p-3">
+        {/* Ban Buttons */}
+        <div className="mb-4 flex justify-between">
+          <div onClick={() => handlePickPokemon(1)}>
+          <BanButton
+            position="left"
+            bannedPokemon={bannedPokemon}
+            setBanTarget={setBanTarget}
+            pokemonData={pokemonData}
+          />
+          </div>
+          <div onClick={() => handlePickPokemon(1)}>
+          <BanButton
+            position="right"
+            bannedPokemon={bannedPokemon}
+            setBanTarget={setBanTarget}
+            pokemonData={pokemonData}
+          />
+          </div>
+        </div>
+
+        <div className="flex gap-2 w-full max-w-7xl">
+          {/* Tim Kiri */}
+          <div className="flex flex-col gap-4">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <PlayerSlot
+                key={i}
+                trainerNumber={i}
+                side="left"
+                pokemon={slotPokemon[i]}
+                onClick={() => { setActiveSlot(i); handlePickPokemon(i); }}
+              />
+            ))}
+          </div>
+
+          {/* Grid Pokemon */}
+          <div className="max-h-[70vh] overflow-auto p-1">
+            <div className="grid grid-cols-3 lg:grid-cols-7 md:grid-cols-4 gap-3">
+              <div className="h-20 w-18"></div>
+              {/* {pokemonData.map((pokemon) => (
+                <div
+                  key={pokemon.id}
+                  onClick={() => isDrafting && handlePickPokemon(pokemon.id)}
+                >
+                  <PokemonCard
+                    pokemon={pokemon}
+                    isPicked={pickedPokemon.includes(pokemon.id)}
+                    isBanned={bannedPokemon.includes(pokemon.id)}
+                  />
+                </div>
+              ))} */}
+              {/* ini bisa di hapus aja */}
+            </div>
+          </div>
+
+          {/* Tim Kanan */}
+          <div className="flex flex-col gap-4">
+            {[ 6, 7, 8, 9, 10].map((i) => (
+              <PlayerSlot
+                key={i}
+                trainerNumber={i}
+                side="right"
+                pokemon={slotPokemon[i]}
+                onClick={() => { setActiveSlot(i); handlePickPokemon(i); }}
+              />
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
-
-export default App;
