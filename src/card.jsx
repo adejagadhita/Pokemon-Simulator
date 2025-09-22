@@ -155,6 +155,7 @@ export default function PokemonGrid(){
     
 
     return (
+        <div className="mt-10  mx-auto  h-[540px] overflow-y-auto">
         <div
         className=" grid grid-cols-7 gap-x-2 gap-y-0  justify-center max-w-[650px] mx-auto ">
             {pokemons.map((pokemon, i) => (
@@ -162,6 +163,7 @@ export default function PokemonGrid(){
     <PokemonCard {...pokemon} />
   </div>
             ))}
+        </div>
         </div>
     );
 }
