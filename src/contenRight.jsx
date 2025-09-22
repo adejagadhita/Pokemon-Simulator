@@ -17,12 +17,7 @@ export default function ContenRight() {
 
   return (
     <div className="md:col-span-3 relative">
-      {/* Ban button di atas card pertama */}
-      <BanButton
-        icon={forbidIcon}
-        side="right"
-        className="absolute -top-14 -right-6 -translate-x-1/2"
-      />
+      
 
       {/* List kartu trainer kanan */}
       <aside className="p-2">
