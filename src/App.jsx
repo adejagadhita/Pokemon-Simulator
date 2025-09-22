@@ -1,7 +1,8 @@
-
 import bg from './assets/bg.png';
 import Top from './top.jsx';
 import Card from './card.jsx';
+import ContenLeft from './contenLeft.jsx';
+import ContenRight from './contenRight.jsx';
 
 
 
@@ -24,9 +25,11 @@ function App() {
       <div className="">
         <Card />
         </div>
-      
+        
+
     </div>
     
   );
 }
+
 export default App;
