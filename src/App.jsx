@@ -21,10 +21,29 @@ function App() {
       <div className="">
         <Top />
         </div>
+        
+        
+        
+        <div className="flex flex-row justify-between items-start px-10 pt-4">
+     <div className="flex flex-col items-start gap-2 mt-10">
+    <ContenLeft />
+     </div>
 
-      <div className="">
+<div className="flex flex-wrap justify-center gap-2">
         <Card />
         </div>
+
+        <div className="flex flex-col items-end gap-2 mt-10">
+    <ContenRight />
+  </div>
+</div>
+
+
+        
+
+      
+
+        
         
 
     </div>
