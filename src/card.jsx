@@ -62,7 +62,7 @@ import Zoroark from "./assets/Pokémon=Zoroark.png";
 
 function PokemonCard ({name, image, bgColor}) {
     return (
-        <div className="relative   overflow-hidden mt-15 ">
+        <div className="relative   overflow-hidden  ">
             <div className=" inset-0 bg-[#220A3D] pt-[3px] px-[3px] pb-[2px] rounded-[15px] flex flex-col items-center ">
         <div
         className={`relative flex flex-col items-center justify-center   overflow-hidden rounded-t-[10px] h-20 w-20 ${bgColor} group`}>
@@ -159,7 +159,7 @@ export default function PokemonGrid(){
         <div
         className=" grid grid-cols-7 gap-x-2 gap-y-0  justify-center max-w-[650px] mx-auto ">
             {pokemons.map((pokemon, i) => (
-               <div key={i} className={i >= 7 ? "-mt-12" : ""}>
+               <div key={i} className={i >= 7 ? "mt-3" : ""}>
     <PokemonCard {...pokemon} />
   </div>
             ))}
