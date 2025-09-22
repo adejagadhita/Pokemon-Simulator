@@ -14,15 +14,9 @@ export default function ContenLeft() {
   const leftCards = [cardLeft1, cardLeft2, cardLeft3, cardLeft4, cardLeft5];
 
   return (
-    <div className="md:col-span-3 relative">
-      {/* Ban button di atas card pertama */}
-      <BanButton
-        icon={forbidIcon}
-        side="left"
-        className="absolute -top-14 left-8 -translate-x-1/2"
-      />
+   
 
-      {/* List kartu trainer kiri */}
+      /* List kartu trainer kiri */
       <aside className="p-2">
         <div className="space-y-2">
           {leftCards.map((src, idx) => (
@@ -30,7 +24,7 @@ export default function ContenLeft() {
           ))}
         </div>
       </aside>
-    </div>
+    
   );
 }
 
