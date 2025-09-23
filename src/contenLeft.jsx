@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 
 // import asset kartu untuk kiri
 import cardLeft1 from "./assets/ungu1.png";
@@ -7,20 +7,35 @@ import cardLeft3 from "./assets/ungu3.png";
 import cardLeft4 from "./assets/ungu4.png";
 import cardLeft5 from "./assets/ungu5.png";
 
-import forbidIcon from "./assets/BanCard.png";
+
 
 //  komponen utama khusus kiri
 export default function ContenLeft() {
   const leftCards = [cardLeft1, cardLeft2, cardLeft3, cardLeft4, cardLeft5];
 
-  return (
-   
+//state untuk menyimpan pilihan kartu dan trainer
+const [selectedTrainer, setselectedTrainer] = useState(null);
+const[selectedCard, setSelectedCard] = useState(null);
 
+//fungsi untuk memilih trainerr
+const handleTrainerClick = (trainerId) => {
+    setselectedTrainer(TrainerId);
+}
+
+//fungsi untuk memilih card
+const handleCardClick = (card) => {
+    setSelectedCard(card);
+}
+  return (
       /* List kartu trainer kiri */
       <aside className="p-2">
         <div className="space-y-2">
           {leftCards.map((src, idx) => (
-            <Row key={`left-${idx}`} img={src} altText={`Trainer ${idx + 1}`} />
+            <Row key={`left-${idx}`} 
+            img={src}
+             altText={`Trainer ${idx + 1}`} 
+             onClick={() => handleCardClick(src)}   //ini untuk menetapkan kartu yang dipilih
+             />
           ))}
         </div>
       </aside>
@@ -37,6 +52,7 @@ function Row({ img, altText }) {
         alt={altText}
         draggable="false"
         className="w-full max-w-[180px] md:max-w-[200px] select-none drop-shadow-[0_6px_12px_rgba(0,0,0,0.25)]"
+        onClick={onClick} //menambahkan klik event
       />
     </div>
   );
