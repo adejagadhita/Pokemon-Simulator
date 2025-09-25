@@ -1,5 +1,6 @@
 import React from "react";
-import Pattern from "./assets/Pattern.png"
+import Pattern from "./assets/Pattern.png";
+
 import Absol from "./assets/Absol.png";
 import Aegish from "./assets/Aegish.png";
 import Alolan from "./assets/Alolan Ninetales.png";
@@ -59,111 +60,129 @@ import Zeraora from "./assets/Pokémon=Zeraora.png";
 import Zoroark from "./assets/Pokémon=Zoroark.png";
 
 
-
-function PokemonCard ({name, image, bgColor}) {
-    return (
-        <div className="relative   overflow-hidden  ">
-            <div className=" inset-0 bg-[#220A3D] pt-[3px] px-[3px] pb-[2px] rounded-[15px] flex flex-col items-center ">
+//code mu ttep terpakai tp emang ad tambahannnnnnnn biar bs d klik, dibanned!
+function PokemonCard({ name, image, bgColor, disabled, banned, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={disabled ? undefined : onClick}
+      className={`relative cursor-pointer outline-none transition-transform duration-150
+                  ${disabled ? "opacity-40 cursor-not-allowed" : "hover:scale-[1.02] active:scale-[0.99]"}`}
+      title={name}
+    >
+      <div className=" inset-0 bg-[#220A3D] pt-[3px] px-[3px] pb-[2px] rounded-[15px] flex flex-col items-center ">
         <div
-        className={`relative flex flex-col items-center justify-center   overflow-hidden rounded-t-[10px] h-20 w-20 ${bgColor} group`}>
-            
-            <img 
+          className={`relative flex flex-col items-center justify-center   overflow-hidden rounded-t-[10px] h-20 w-20 ${bgColor} group`}
+        >
+          <img
             src={Pattern}
             alt="pattern"
-           className="absolute inset-0 w-full h-full object-cover opacity-70"
-            />
-
-            <img 
+            className="absolute inset-0 w-full h-full object-cover opacity-70"
+          />
+          <img
             src={image}
             alt={name}
             className="relative z-10  object-contain transition-transform duration-150 group-hover:scale-125"
+          />
 
-            
-             />
-
-            
+          {banned && (
+            <>
+              <div className="absolute inset-0 bg-black/20 z-20 pointer-events-none" />
+              <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                <span
+                  className="text-2xl md:text-3xl select-none"
+                  style={{ opacity: 0.75, filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.45))" }}
+                >
+                  🚫
+                </span>
               </div>
-              <p className="relative z-10 text-white font-bold oxo">{name}</p>
+            </>
+          )}
+
+          
         </div>
-        </div>
-    )
+        <p className="relative z-10 text-white font-bold oxo">{name}</p>
+      </div>
+    </button>
+  );
 }
 
+export default function PokemonGrid({ onPick, disabledNames, bannedNames }) {
+  const pokemons = [
+    { name: "Absol", image: Absol, bgColor: "bg-[#29A5E3]" },
+    { name: "Aegish", image: Aegish, bgColor: "bg-[#CE5FD3]" },
+    { name: "Alolan", image: Alolan, bgColor: "bg-[#F16C38]" },
+    { name: "Azulmaril", image: Azulmaril, bgColor: "bg-[#CE5FD3]" },
+    { name: "Balestoise", image: Balestoise, bgColor: "bg-[#ACED5B]" },
+    { name: "Blissey", image: Blissey, bgColor: "bg-[#FECC51]" },
+    { name: "Buzwole", image: Buzzwole, bgColor: "bg-[#CE5FD3]" },
+    { name: "Charizad", image: Carizard, bgColor: "bg-[#CE5FD3]" },
+    { name: "Cinderace", image: Cinderace, bgColor: "bg-[#F16C38]" },
+    { name: "Clefable", image: Clefable, bgColor: "bg-[#FECC51]" },
+    { name: "Comfey", image: Comfey, bgColor: "bg-[#FECC51]" },
+    { name: "Cramorant", image: Cramorant, bgColor: "bg-[#F16C38]" },
+    { name: "Crustle", image: Crustle, bgColor: "bg-[#ACED5B]" },
+    { name: "Decidueye", image: Decidueye, bgColor: "bg-[#F16C38]" },
+    { name: "Delphox", image: Delphox, bgColor: "bg-[#F16C38]" },
+    { name: "Dodrio", image: Dodrio, bgColor: "bg-[#29A5E3]" },
+    { name: "Dragapult", image: Dragapult, bgColor: "bg-[#F16C38]" },
+    { name: "Dragonite", image: Dragonite, bgColor: "bg-[#CE5FD3]" },
+    { name: "Duraludon", image: Duraludon, bgColor: "bg-[#F16C38]" },
+    { name: "Eldegoss", image: Eldegoss, bgColor: "bg-[#FECC51]" },
+    { name: "Espeon", image: Espeon, bgColor: "bg-[#F16C38]" },
+    { name: "Garchomp", image: Garchomp, bgColor: "bg-[#CE5FD3]" },
+    { name: "Gardevoir", image: Gardevoir, bgColor: "bg-[#F16C38]" },
+    { name: "Gengar", image: Gengar, bgColor: "bg-[#29A5E3]" },
+    { name: "Glaceon", image: Glaceon, bgColor: "bg-[#F16C38]" },
+    { name: "Goodra", image: Goodra, bgColor: "bg-[#ACED5B]" },
+    { name: "Greedent", image: Greedent, bgColor: "bg-[#ACED5B]" },
+    { name: "Greninja", image: Greninja, bgColor: "bg-[#F16C38]" },
+    { name: "Hoopa", image: Hoopa, bgColor: "bg-[#FECC51]" },
+    { name: "Lapras", image: Lapras, bgColor: "bg-[#ACED5B]" },
+    { name: "Lucario", image: Lucario, bgColor: "bg-[#CE5FD3]" },
+    { name: "Machamp", image: Machamp, bgColor: "bg-[#CE5FD3]" },
+    { name: "Mamosine", image: Mamosine, bgColor: "bg-[#ACED5B]" },
+    { name: "Mew", image: Mew, bgColor: "bg-[#F16C38]" },
+    { name: "Mime", image: Mime, bgColor: "bg-[#FECC51]" },
+    { name: "Pikachu", image: Pikachu, bgColor: "bg-[#F16C38]" },
+    { name: "Sableye", image: Sableye, bgColor: "bg-[#FECC51]" },
+    { name: "Scizor", image: Scizor, bgColor: "bg-[#CE5FD3]" },
+    { name: "Slowbro", image: Slowbro, bgColor: "bg-[#ACED5B]" },
+    { name: "Snorlax", image: Snorlax, bgColor: "bg-[#ACED5B]" },
+    { name: "Sylveon", image: Sylveon, bgColor: "bg-[#F16C38]" },
+    { name: "TalonFlame", image: TalonFlame, bgColor: "bg-[#29A5E3]" },
+    { name: "Trevenant", image: Trevenant, bgColor: "bg-[#ACED5B]" },
+    { name: "Tsareena", image: Tsareena, bgColor: "bg-[#CE5FD3]" },
+    { name: "Tyranitar", image: Tyranitar, bgColor: "bg-[#CE5FD3]" },
+    { name: "Urshifu", image: Urshifu, bgColor: "bg-[#CE5FD3]" },
+    { name: "Venusaur", image: Venusaur, bgColor: "bg-[#F16C38]" },
+    { name: "Wigglytuff", image: Wigglytuff, bgColor: "bg-[#FECC51]" },
+    { name: "Zacian", image: Zacian, bgColor: "bg-[#CE5FD3]" },
+    { name: "Zeraora", image: Zeraora, bgColor: "bg-[#29A5E3]" },
+    { name: "Zoroark", image: Zoroark, bgColor: "bg-[#29A5E3]" },
+  ];
 
+  return (
+    <div className="mt-10 mx-auto h-[540px] overflow-y-auto">
+      <div className="grid grid-cols-7 gap-x-2 gap-y-0 justify-center max-w-[650px] mx-auto">
+        {pokemons.map((p, i) => {
+          const isDisabled = disabledNames?.has(p.name);
+          const isBanned = bannedNames?.has(p.name);
 
-export default function PokemonGrid(){
-    const pokemons = [
-        {name: ["Absol"], image: Absol, bgColor: "bg-[#29A5E3] "},
-        {name: ["Aegish"], image: Aegish, bgColor: "bg-[#CE5FD3]"},
-        {name: ["Alolan"], image: Alolan, bgColor: "bg-[#F16C38]"},
-         {name: ["Azulmaril"], image: Azulmaril, bgColor: "bg-[#CE5FD3]"},
-          {name: ["Balestoise"], image: Balestoise, bgColor: "bg-[#ACED5B]"},
-            {name: ["Blissey"], image: Blissey, bgColor: "bg-[#FECC51]"},
-            {name: ["Buzwole"], image: Buzzwole, bgColor: "bg-[#CE5FD3]"},
-
-             {name: ["Charizad"], image: Carizard, bgColor: "bg-[#CE5FD3]"},
-              {name: ["Cinderace"], image: Cinderace, bgColor: "bg-[#F16C38]"},
-               {name: ["Clefable"], image: Clefable, bgColor: "bg-[#FECC51]"},
-                {name: ["Comfey"], image: Comfey, bgColor: "bg-[#FECC51]"},
-                 {name: ["Cramorant"], image: Cramorant, bgColor: "bg-[#F16C38]"},
-                  {name: ["Crustle"], image: Crustle, bgColor: "bg-[#ACED5B]"},
-                   {name: ["Decidueye"], image: Decidueye, bgColor: "bg-[#F16C38]"},
-
-                   {name: ["Delphox"], image: Delphox, bgColor: "bg-[#F16C38]"},
-              {name: ["Dodrio"], image: Dodrio, bgColor: "bg-[#29A5E3]"},
-               {name: ["Dragapult"], image: Dragapult, bgColor: "bg-[#F16C38]"},
-                {name: [" Dragonite"], image: Dragonite, bgColor: "bg-[#CE5FD3]"},
-                 {name: ["Duraludon"], image: Duraludon, bgColor: "bg-[#F16C38]"},
-                  {name: ["Eldegoss"], image: Eldegoss, bgColor: "bg-[#FECC51]"},
-                   {name: ["Espeon"], image: Espeon, bgColor: "bg-[#F16C38]"},
-
-                   {name: ["Garchomp"], image: Garchomp, bgColor: "bg-[#CE5FD3]"},
-              {name: ["Gardevoir"], image: Gardevoir, bgColor: "bg-[#F16C38]"},
-               {name: ["Gengar"], image: Gengar, bgColor: "bg-[#29A5E3]"},
-                {name: [" Glaceon"], image: Glaceon, bgColor: "bg-[#F16C38]"},
-                 {name: ["Goodra"], image: Goodra, bgColor: "bg-[#ACED5B]"},
-                  {name: ["Greedent"], image: Greedent, bgColor: "bg-[#ACED5B]"},
-                   {name: ["Greninja"], image: Greninja, bgColor: "bg-[#F16C38]"},
-
-                     {name: ["Hoopa"], image: Hoopa, bgColor: "bg-[#FECC51]"},
-              {name: ["Lapras"], image: Lapras, bgColor: "bg-[#ACED5B]"},
-               {name: ["Lucario"], image: Lucario, bgColor: "bg-[#CE5FD3]"},
-                {name: [" Machamp"], image: Machamp, bgColor: "bg-[#CE5FD3]"},
-                 {name: ["Mamosine"], image: Mamosine, bgColor: "bg-[#ACED5B]"},
-                  {name: ["Mew"], image: Mew, bgColor: "bg-[#F16C38]"},
-                   {name: ["Mime"], image: Mime, bgColor: "bg-[#FECC51]"},
-
-                    {name: ["Pikachu"], image: Pikachu, bgColor: "bg-[#F16C38]"},
-              {name: ["Sableye"], image: Sableye, bgColor: "bg-[#FECC51]"},
-               {name: ["Scizor"], image: Scizor, bgColor: "bg-[#CE5FD3]"},
-                {name: [" Slowbro"], image: Slowbro, bgColor: "bg-[#ACED5B]"},
-                 {name: ["Snorlax"], image: Snorlax, bgColor: "bg-[#ACED5B]"},
-                  {name: ["Sylveon"], image: Sylveon, bgColor: "bg-[#F16C38]"},
-                   {name: ["TalonFlame"], image: TalonFlame, bgColor: "bg-[#29A5E3]"},
-
-                    {name: ["Trevenant"], image: Trevenant, bgColor: "bg-[#ACED5B]"},
-              {name: ["Tsareena"], image: Tsareena, bgColor: "bg-[#CE5FD3]"},
-               {name: ["Tyranitar"], image: Tyranitar, bgColor: "bg-[#CE5FD3]"},
-                {name: [" Urshifu"], image: Urshifu , bgColor: "bg-[#CE5FD3]"},
-                 {name: ["Venusaur"], image: Venusaur, bgColor: "bg-[#F16C38]"},
-                  {name: ["Wigglytuff"], image: Wigglytuff, bgColor: "bg-[#FECC51]"},
-                   {name: ["Zacian"], image: Zacian, bgColor: "bg-[#CE5FD3]"},
-                   {name: ["Zeraora"], image: Zeraora, bgColor: "bg-[#29A5E3]"},
-                   {name: ["Zoroark"], image: Zoroark, bgColor: "bg-[#29A5E3]"},
-    
-    ];
-    
-
-    return (
-        <div className="mt-10  mx-auto  h-[540px] overflow-y-auto">
-        <div
-        className=" grid grid-cols-7 gap-x-2 gap-y-0  justify-center max-w-[650px] mx-auto ">
-            {pokemons.map((pokemon, i) => (
-               <div key={i} className={i >= 7 ? "mt-3" : ""}>
-    <PokemonCard {...pokemon} />
-  </div>
-            ))}
-        </div>
-        </div>
-    );
+          return (
+            <div key={p.name} className={i >= 7 ? "mt-3" : ""}>
+              <PokemonCard
+                name={p.name}
+                image={p.image}
+                bgColor={p.bgColor}
+                disabled={isDisabled}
+                banned={isBanned}
+                onClick={() => onPick?.({ name: p.name, image: p.image })}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
