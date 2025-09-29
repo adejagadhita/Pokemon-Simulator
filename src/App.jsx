@@ -14,9 +14,6 @@ function App() {
   const [leftPicks, setLeftPicks] = useState([null, null, null, null, null]);
   const [rightPicks, setRightPicks] = useState([null, null, null, null, null]);
 
-  //dibawah ini code baru
-  const [currentTurn, setCurrentTurn] = useState("left"); // "left" = tim purple mulai dulu
-
   const [selectedSlot, setSelectedSlot] = useState(null);
 
   const [banLeft, setBanLeft] = useState(null);
@@ -41,9 +38,9 @@ function App() {
 
   function handlePick({ name, image }) {
     if (selectedBan) {
-      if (selectedBan === "left" && !banLeft && currentTurn ==="left") { //ditambahin currenturn yg right jg
+      if (selectedBan === "left" && !banLeft ) { 
         setBanLeft({ name, image });
-      } else if (selectedBan === "right" && !banRight && currentTurn === "right") {
+      } else if (selectedBan === "right" && !banRight ) {
         setBanRight({ name, image });
       }
       setSelectedBan(null);
@@ -54,7 +51,7 @@ function App() {
     if (!selectedSlot) return;
 
     const { side, index } = selectedSlot;
-    if (side !==currentTurn) return; //ini d tmbhin, ini mecegah pick oleh tim yg bukan gliran
+   
 
     if (side === "left") {
       setLeftPicks((prev) => {
@@ -63,7 +60,7 @@ function App() {
         next[index] = { name, image };
         return next;
       });
-      setCurrentTurn("right"); //gnti giliran
+      
     } else {
       setRightPicks((prev) => {
         if (prev[index]) return prev;
@@ -71,7 +68,7 @@ function App() {
         next[index] = { name, image };
         return next;
       });
-      setCurrentTurn("left"); //gnti gliran
+      
     }
     setSelectedSlot(null);
   }
@@ -152,10 +149,7 @@ function App() {
         <>
           <div className="">
             <Top />
-            {/*tambahannnn d bwh untuk gliran tim*/}
-            <div className="text-center mt-4 text-white font-bold text-2xl">
-              {currentTurn === "left" ? "🟣 Purple" : "🟠 Orange" }
-            </div>
+
           </div >
 
           <div className="flex flex-row justify-between items-start px-10 pt-4 ">
@@ -165,8 +159,7 @@ function App() {
                 picks={leftPicks}
                 onSelectSlot={(i) => handleSelectTrainer("left", i)}
                 selectedIndex={ selectedSlot?.side === "left" ? selectedSlot.index : -1 }
-                //ada ta,bahan ini d bwh
-                disabled={currentTurn !=="left"} //hanya bs d klik saat gliran tim kiri 
+                
               />
 
               <Ban
@@ -175,9 +168,8 @@ function App() {
                 selected={selectedBan === "left"}
                 pick={banLeft}
                 onSelect={() => {
-                  //ini ad tambahan d tmbhin if currentturn
-                  if (currentTurn === "left")  {
-                  handleSelectBan("left")}
+                  
+                  handleSelectBan("left")
                 }
                 }
               />
@@ -198,8 +190,7 @@ function App() {
                 picks={rightPicks}
                 onSelectSlot={(i) => handleSelectTrainer("right", i)}
                 selectedIndex={ selectedSlot?.side === "right" ? selectedSlot.index : -1 }
-                //ni ad tambahan
-                disabled={currentTurn !== "right"} //hny bs  d klik pas gliran tim kanan
+                
               />
               <Ban
                 //ni ban trainer kiri
@@ -207,9 +198,10 @@ function App() {
                 selected={selectedBan === "right"}
                 pick={banRight}
                 onSelect={() => {
+
+                   handleSelectBan("right")
                   //ini ad tmbahan bwhnya
-                  if (currentTurn === "right") {
-                  handleSelectBan("right")}
+                 
                 }
                 }
               />
