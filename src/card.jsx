@@ -85,19 +85,7 @@ function PokemonCard({ name, image, bgColor, disabled, banned, onClick }) {
             className="relative z-10  object-contain transition-transform duration-150 group-hover:scale-125"
           />
 
-          {banned && (
-            <>
-              <div className="absolute inset-0 bg-black/20 z-20 pointer-events-none" />
-              <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                <span
-                  className="text-2xl md:text-3xl select-none"
-                  style={{ opacity: 0.75, filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.45))" }}
-                >
-                  🚫
-                </span>
-              </div>
-            </>
-          )}
+        
 
           
         </div>
