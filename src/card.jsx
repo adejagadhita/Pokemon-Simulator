@@ -62,6 +62,7 @@ import Zoroark from "./assets/Pokémon=Zoroark.png";
 
 //code mu ttep terpakai tp emang ad tambahannnnnnnn biar bs d klik, dibanned!
 function PokemonCard({ name, image, bgColor, disabled, banned, onClick }) {
+  
   return (
     <button
       type="button"
