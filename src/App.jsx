@@ -8,6 +8,9 @@ import ContenRight from "./contenRight.jsx";
 import Ban from "./banButton.jsx";
 import pokemons from "./pokemonList.js";  //aku simpen pokemonny d pokemonlist ya soalny kl import dsni kbnyakn (buat pokemon random )
 
+import { motion, AnimatePresence } from "framer-motion";
+
+
 function App() {
   const [turn, setTurn] = useState("purple");
   const [countdown, setCountdown] = useState(null);
@@ -15,7 +18,12 @@ function App() {
   const [banned, setBanned] = useState({ purple: null, orange: null });
   const [picked, setPicked] = useState({ purple: [], orange: [] });
 
+  const [isFinished, setIsFinished] = useState(false);
+  const [showVS, setShowVS] = useState(false);
+
   const MAX_PICKS = 5; // batas pokemon per tim
+
+
 
 
   useEffect(() => {
@@ -48,6 +56,12 @@ function App() {
     );
   };
 
+
+//   useEffect (() => {
+//   if (phase === "pick" && isAllPicked()){
+//     setIsFinished(true);
+//   }
+// },[phase, picked]);
   
   const handleStart = () => {
     setCountdown(20);
@@ -149,6 +163,15 @@ function App() {
 };
 
 
+useEffect(() => {
+  if (isAllPicked()) {
+    setCountdown(null);        // stop timer
+    setTimeout(() => setShowVS(true), 1000); // delay 1 detik biar smooth
+  }
+}, [picked]);
+
+
+
   return (
     <div>
       <img
@@ -156,10 +179,19 @@ function App() {
         src={bg}
         alt="Background"
       />
-
-      <div className="relative z-10">
+  <AnimatePresence mode="wait">
+      {!showVS ? (
+      <motion.div
+      key="draft"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.1 }}
+          className="relative z-10"
+          >
+      
         <Top countdown={countdown} turn={turn} onStart={handleStart} />
-      </div>
+    
 
       <div className="flex flex-row justify-between items-start px-10 pt-4">
         {/* LEFT TRAINER */}
@@ -170,6 +202,7 @@ function App() {
 
         {/* POKEMON GRID */}
         <div className="flex flex-wrap justify-center gap-2">
+          
           <Card
             onPick={phase === "ban" ? handleBan : handlePick}
             disabledNames={new Set([
@@ -192,7 +225,56 @@ function App() {
           <Ban position="right" pokemon={banned.orange} />
         </div>
       </div>
+    
+    </motion.div>
+    ) : (
+      <motion.div  key="vs-screen"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="flex flex-col items-center justify-center h-screen relative z-10 text-white"
+          >
+
+           
+            <div className="flex items-center gap-50">
+              <div className="flex flex-col items-center gap-6.5 ">
+                <div className="absolute ">
+                  <ContenLeft />
+                  </div>
+                {picked.purple.map((p, i) => (
+                  <img 
+                  key={i}
+                  src={p.image}
+                  alt={p.name} 
+                  
+                  className="z-10 relative right-14 top-5.5 h-20 "/>
+                  
+                ))}
+              </div>
+
+              <h1 className="text-[100px] font-bold ">VS</h1>
+
+                
+               
+               <div className="flex flex-col items-center gap-6.5">
+                <div className="absolute">
+                 <ContenRight />
+                 </div>
+                {picked.orange.map((p, i) => (
+                  <img 
+                  key={i}
+                  src={p.image}
+                  alt={p.name}
+                  className="z-10 relative left-14 top-5.5 h-20" />
+                ))}
+              </div>
+            </div>
+
+      </motion.div>
+    )}
+    </AnimatePresence>
     </div>
-  );
+  );  
 }
 export default App;

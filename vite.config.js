@@ -7,3 +7,5 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: "/Pokemon-Simulator",
 });
+
+

@@ -152,8 +152,8 @@ export default function PokemonGrid({ onPick, disabledNames, bannedNames }) {
   ];
 
   return (
-    <div className="mt-10 mx-auto h-[540px] overflow-y-auto">
-      <div className="grid grid-cols-7 gap-x-2 gap-y-0 justify-center max-w-[650px] mx-auto">
+    <div className="mt-10 mx-auto h-[540px]  overflow-y-auto overflow-x-hidden scroll">
+      <div  className="grid grid-cols-7 gap-x-2 gap-y-0 justify-center max-w-[650px] mx-auto ">
         {pokemons.map((p, i) => {
           const isDisabled = disabledNames?.has(p.name);
           const isBanned = bannedNames?.has(p.name);
