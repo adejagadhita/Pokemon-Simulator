@@ -17,8 +17,16 @@ function App() {
   const [phase, setPhase] = useState("ban");
   const [banned, setBanned] = useState({ purple: null, orange: null });
   const [picked, setPicked] = useState({ purple: [], orange: [] });
+  const [pickIndex, setPickIndex] = useState(0);
+  const pickOrder = [
+    "purple",
+    "orange","orange",
+    "purple","purple",
+    "orange","orange",
+    "purple","purple",
+    "orange"
+  ];
 
-  const [isFinished, setIsFinished] = useState(false);
   const [showVS, setShowVS] = useState(false);
 
   const MAX_PICKS = 5; // batas pokemon per tim
@@ -57,11 +65,7 @@ function App() {
   };
 
 
-//   useEffect (() => {
-//   if (phase === "pick" && isAllPicked()){
-//     setIsFinished(true);
-//   }
-// },[phase, picked]);
+
   
   const handleStart = () => {
     setCountdown(20);
@@ -69,6 +73,7 @@ function App() {
     setPhase("ban");
     setPicked({ purple: [], orange: [] });
     setBanned({ purple: null, orange: null });
+    setPickIndex(0);
   };
 
   
@@ -119,14 +124,13 @@ function App() {
       [turn]: [...prev[turn], pokemon],
     }));
 
-    // jika belum selesai, lanjut giliran
-    const nextTurn = turn === "purple" ? "orange" : "purple";
-    setTurn(nextTurn);
+   
 
-    // kalau sudah penuh -> stop timer
-    if (!isAllPicked()) {
+    if(pickIndex < pickOrder.length - 1) {
+      setPickIndex(pickIndex + 1);
+      setTurn(pickOrder[pickIndex + 1]);
       setCountdown(20);
-    } else {
+    }else {
       setCountdown(null);
     }
   };
