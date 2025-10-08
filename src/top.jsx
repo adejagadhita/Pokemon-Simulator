@@ -6,7 +6,7 @@ import originalWelcome from "./assets/Vector.png";
 function Top({ countdown, turn, onStart }) {
   return (
     <div className="relative z-10">
-      {/* Welcome screen */}
+    
       {countdown === null && (
         <div className="relative mx-auto w-fit text-center">
           <img className="h-20 w-115" src={originalWelcome} alt="Start Button" />
@@ -24,7 +24,7 @@ function Top({ countdown, turn, onStart }) {
         </div>
       )}
 
-      {/* Countdown screen */}
+     
       {countdown !== null && (
         <div className="relative top-0 left-1/2 -translate-x-1/2 z-50">
           <div className="flex flex-col items-center justify-center">
